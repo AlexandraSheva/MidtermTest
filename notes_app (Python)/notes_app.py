@@ -22,6 +22,28 @@ def show_menu() -> int:
     choice = int(input())
     return choice
 
+def work_with_notebook():
+    choice = show_menu()
+    note_book = read_csv('notebook.csv')
+
+    while (choice != 6):
+        if choice == 1: # 1. Отобразить весь справочник
+            print_result(note_book) 
+        elif choice == 2: # 2. Найти запись по дате
+            date = date_search()
+            print_result(find_by_date(note_book, date)) 
+        #elif choice == 3: # 3. Редактировать заметку
+            
+        elif choice == 4: # 4. Добавить запись
+            user_data = get_new_note() 
+            add_note(note_book, user_data)
+            write_csv('notebook.csv', note_book)
+        elif choice == 5: # 5. Удалить запись
+            name = date_search() 
+            print_result(find_by_date(note_book, name)) 
+            delete_note(note_book, find_by_date(note_book, name))
+            write_csv('notebook.csv', note_book)
+
 def read_csv(filename: str) -> list:  #чтение файла
     data = []
     fields = ["Идентификатор", "Заголовок", "Заметка", "Дата создания/ изменения"]
@@ -102,25 +124,6 @@ def delete_note(data: list, note): #удаление заметки
                 return
             tmp.clear()
 
-def work_with_notebook():
-    choice = show_menu()
-    note_book = read_csv('notebook.csv')
 
-    while (choice != 6):
-        if choice == 1: # 1. Отобразить весь справочник
-            print_result(note_book) 
-        elif choice == 2: # 2. Найти запись по дате
-            date = date_search()
-            print_result(find_by_date(note_book, date)) 
-        #elif choice == 3: # 3. Редактировать заметку
-            
-        elif choice == 4: # 4. Добавить запись
-            user_data = get_new_note() 
-            add_note(note_book, user_data)
-            write_csv('notebook.csv', note_book)
-        elif choice == 5: # 5. Удалить запись
-            name = date_search() 
-            print_result(find_by_date(note_book, name)) 
-            delete_note(note_book, find_by_date(note_book, name))
-            write_csv('notebook.csv', note_book)
         
+work_with_notebook()
